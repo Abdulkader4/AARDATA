@@ -6,7 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
+ 
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <style>
     body {
       background: linear-gradient(135deg, #1d3557, #457b9d);
@@ -29,33 +32,27 @@
       </button>
     </div>
 
-    
   </nav>
 
-  <!-- Mobile menu -->
   <div id="mobileMenu" class="hidden md:hidden fixed top-16 left-0 w-full bg-[#1d3557] p-4 z-40 shadow-md">
-    <a href="" class="block py-2 text-white text-center hover:text-yellow-300">Docentomgeving</a>
-    <a href="#" class="block py-2 text-white text-center hover:text-yellow-300">Studentstatistieken</a>
+    <a href="#" class="block py-2 px-4 text-white text-center hover:text-yellow-300 hover:bg-white/10 rounded transition">Docentomgeving</a>
+    <a href="#" class="block py-2 px-4 text-white text-center hover:text-yellow-300 hover:bg-white/10 rounded transition">Studentstatistieken</a>
   </div>
 
-  <!-- Content -->
-  <div class="flex flex-col justify-center items-center min-h-screen text-center px-4 pt-40">
-    <!-- العنوان مع أيقونة -->
+  <div class="flex flex-col justify-center items-center min-h-screen text-center px-4 pt-10">
     <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 flex items-center gap-2" data-aos="fade-down">
       <i data-lucide="database" class="w-10 h-10 text-yellow-300"></i>
       Welkom bij <span class="text-yellow-300">AARDATA</span>
     </h1>
 
-    <!-- وصف مع أيقونة -->
     <p class="text-base sm:text-lg md:text-xl mb-8 max-w-2xl flex items-center justify-center gap-2" data-aos="fade-up" data-aos-delay="200">
-      <i data-lucide="bar-chart-3" class="w-6 h-6 text-white"></i>
+      <i data-lucide="bar-chart-3" class="w-10 h-10 text-white"></i>
       Een slim platform voor digitale registratie van aanwezigheid en statistieken.
     </p>
 
-    <!-- أزرار تظهر دائمًا -->
     <div class="flex flex-col md:flex-row gap-4" data-aos="zoom-in" data-aos-delay="400">
-      <a href="" class="px-6 py-3 bg-yellow-400 text-black rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2">
-        <i data-lucide="chalkboard-teacher" class="w-5 h-5"></i>
+      <a href="#" class="px-6 py-3 bg-yellow-400 text-black font-medium rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2">
+        <i class="fas fa-chalkboard-teacher text-lg"></i>
         Ga naar Docentomgeving
       </a>
       <a href="#" class="px-6 py-3 bg-white text-blue-800 rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 flex items-center gap-2">
@@ -66,6 +63,8 @@
   </div>
 
   <!-- Scripts -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init();
@@ -77,6 +76,8 @@
     burgerBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
+
+
   </script>
 </body>
 </html>
