@@ -60,7 +60,7 @@
     </p>
 
     <div class="flex flex-col md:flex-row gap-4" data-aos="zoom-in" data-aos-delay="400">
-      <a href="#" class="px-6 py-3 bg-yellow-400 text-black font-medium rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2">
+      <a href="{{ route('docent.pagina') }}" class="px-6 py-3 bg-yellow-400 text-black font-medium rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2">
         <i class="fas fa-chalkboard-teacher text-lg"></i>
         Ga naar Docentomgeving
       </a>
