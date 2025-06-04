@@ -12,12 +12,11 @@ Route::get('/', function () {
 });
 
 Route::resource('Welkome',HomeController::class);
-<<<<<<< HEAD
+
 Route::get('/AAR_[JAAR]W[WEEK][CODE].EXTENSIE/docent',[DocentController::class,'index'])->name('docent.pagina');
 Route::get('/upload', [UploadController::class, 'show'])->name('upload.show');
 Route::post('/upload', [UploadController::class, 'upload'])->name('upload.store');
 
-=======
 
 
 Route::get('/upload', [UploadController::class, 'show'])->name('upload.show');
@@ -25,4 +24,4 @@ Route::post('/upload', [UploadController::class, 'upload'])->name('upload.store'
 
 
 Route::get('/student', [StudentDashboardController::class, 'index'])->name('student.dashboard');
->>>>>>> a4e0af5 (Student page gemaakt)
+
