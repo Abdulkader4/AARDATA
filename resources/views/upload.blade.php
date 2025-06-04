@@ -15,17 +15,19 @@
 </head>
 <body class="text-white min-h-screen flex items-center justify-center px-4 py-8 sm:py-12">
 
+    {{-- Container --}}
     <div class="bg-white text-gray-800 p-6 sm:p-8 rounded-2xl shadow-2xl w-full max-w-lg sm:max-w-xl" data-aos="fade-up">
+        {{-- Titel --}}
         <h1 class="text-2xl sm:text-3xl font-bold mb-4 text-center text-blue-800">Upload AAR Bestand</h1>
 
-        {{-- Terug naar home --}}
-        <form action="/" method="GET" class="mb-6">
-            <button type="submit" class="ml-1 text-xs sm:text-sm bg-white text-blue-800 font-medium px-3 py-1.5 rounded-full shadow hover:bg-gray-100 transition-all duration-300">
+        {{-- Terug naar Home-knop --}}
+        <form action="Welkome" method="GET" class="mb-6">
+            <button type="submit" class="ml-1 text-xs sm:text-sm bg-white text-blue-800 font-medium px-3 py-1.5 rounded-full shadow hover:bg-gray-100 transition">
                 ← Terug naar Home
             </button>
         </form>
 
-        {{-- Meldingen --}}
+        {{-- Flashmeldingen --}}
         @if(session('success'))
             <div class="bg-green-100 text-green-700 p-2 rounded mb-4 text-sm">{{ session('success') }}</div>
         @endif
@@ -42,16 +44,16 @@
             </div>
         @endif
 
-        {{-- Formulier --}}
+        {{-- Uploadformulier --}}
         <form id="uploadForm" action="{{ route('upload.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
             @csrf
             <input type="file" name="file" class="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <button type="button" onclick="openModal()" class="bg-yellow-400 text-black px-6 py-3 rounded-full hover:bg-yellow-300 transition-all duration-300 w-full">
+            <button type="button" onclick="openModal()" class="bg-yellow-400 text-black px-6 py-3 rounded-full hover:bg-yellow-300 transition w-full">
                 Uploaden
             </button>
         </form>
 
-        {{-- Voorbeeldinhoud --}}
+        {{-- Voorbeelddata (optioneel) --}}
         @if(!empty($data))
             <div class="mt-8">
                 <h2 class="text-lg sm:text-xl font-semibold mb-2 text-center text-blue-900">Voorbeeldinhoud</h2>
@@ -70,7 +72,7 @@
         @endif
     </div>
 
-    {{-- Modal overlay --}}
+    {{-- Bevestigingsmodal --}}
     <div id="confirmModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 hidden px-4">
         <div class="bg-white text-gray-800 rounded-lg p-4 sm:p-6 max-w-md w-full shadow-lg">
             <h2 class="text-lg sm:text-xl font-bold mb-4 text-blue-800">Bevestig Upload</h2>

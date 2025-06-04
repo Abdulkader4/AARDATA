@@ -71,7 +71,11 @@
           </select>
           <select class="border rounded px-4 py-2 w-full sm:w-48 shadow">
             <option>Bezig</option>
+<<<<<<< HEAD
             <option>Gestopt</option>  
+=======
+            <option>Gestopt</option>
+>>>>>>> 16194f7 (Upload page-versie2)
           </select>
           <input type="date" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
           <input type="date" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
@@ -128,4 +132,8 @@
 
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 16194f7 (Upload page-versie2)

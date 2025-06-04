@@ -16,25 +16,24 @@
 </head>
 <body class="min-h-screen text-white">
 
-<!-- Navbar -->
+<!-- 🔝 Navbar -->
 <nav class="bg-[#1d3557] shadow-md px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
     <div class="flex items-center gap-4">
         <h1 class="text-xl font-bold text-yellow-300">AARDATA</h1>
-        <a href="#" class="text-white hover:text-yellow-300 font-medium transition">Home</a>
-        <a href="#" class="text-white hover:text-yellow-300 font-medium transition">Profiel</a>
-        <a href="#" class="text-white hover:text-yellow-300 font-medium transition">Instellingen</a>
+        <a href="{{ url('Welkome') }}" class="text-white hover:text-yellow-300 font-medium transition">Home</a>
     </div>
     <button onclick="downloadPDF()" class="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 transition">
         Download PDF
     </button>
 </nav>
 
-<!-- Main Content -->
+<!-- 📊 Dashboard Content -->
 <main id="pdfContent" class="pt-24 px-6 max-w-7xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Welkom, {{ $loggedInStudentName }}</h1>
+    <h1 class="text-3xl font-bold mb-6">Welkom, {{ $loggedInStudentName }} ({{ $studentNumber }})</h1>
 
-    <!-- Cards -->
+    <!-- 📦 Statistiekkaarten -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        {{-- Aanwezigheid in procenten + label --}}
         <div class="bg-white text-black p-4 rounded shadow text-center">
             <p class="text-sm text-gray-500">Aanwezigheid</p>
             @php
@@ -60,6 +59,7 @@
             <p class="text-2xl font-bold {{ $color }}">{{ $percentage }}% {{ $label }}</p>
         </div>
 
+        {{-- Uitleg bij score --}}
         <div class="bg-white text-black p-4 rounded shadow text-center flex flex-col items-center">
             @if($percentage === 100)
                 <p class="text-green-700 mb-2">Perfect! Je bent altijd aanwezig geweest. 🚀</p>
@@ -76,23 +76,29 @@
             @else
                 <p class="text-red-700 mb-2">0% aanwezigheid, dringend actie nodig!</p>
             @endif
+
+            {{-- Cirkelgrafiek --}}
             <div class="w-36 h-36 mt-4">
                 <canvas id="circleChart" width="144" height="144"></canvas>
             </div>
         </div>
 
-        <form method="GET" class="bg-white text-black p-4 rounded shadow space-y-2">
+        {{-- Filterformulier met studentNumber meegegeven --}}
+        <form method="GET" action="{{ route('student.dashboard', ['studentNumber' => $studentNumber]) }}" class="bg-white text-black p-4 rounded shadow space-y-2">
             <label class="text-sm">Van</label>
             <input type="date" name="from" value="{{ $from }}" class="border rounded px-2 py-1 w-full">
+
             <label class="text-sm">Tot</label>
             <input type="date" name="to" value="{{ $to }}" class="border rounded px-2 py-1 w-full">
+
             <label class="text-sm">Week</label>
             <input type="number" name="week" value="{{ $week }}" class="border rounded px-2 py-1 w-full">
+
             <button type="submit" class="bg-yellow-400 text-black rounded px-4 py-2 w-full hover:bg-yellow-300">Filteren</button>
         </form>
     </div>
 
-    <!-- Tabel -->
+    <!-- 📋 Tabel met weekgegevens -->
     <div class="bg-white text-black p-4 rounded shadow overflow-x-auto">
         <table class="w-full text-sm text-left">
             <thead class="bg-gray-100 text-gray-700">
@@ -121,7 +127,6 @@
     </div>
 </main>
 
-<!-- Scripts -->
 <script>
     const percentage = {{ $percentage ?? 0 }};
     const ctx = document.getElementById('circleChart').getContext('2d');
@@ -129,8 +134,8 @@
     Chart.register({
         id: 'centerText',
         beforeDraw: (chart) => {
-            const {width} = chart;
-            const {ctx} = chart;
+            const { width } = chart;
+            const { ctx } = chart;
             const text = percentage + '%';
             ctx.restore();
             const fontSize = (width / 6);

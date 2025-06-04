@@ -7,13 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-<<<<<<< HEAD
-=======
-
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
->>>>>>> a4e0af5 (Student page gemaakt)
   <style>
     body {
       background: linear-gradient(135deg, #1d3557, #457b9d);
@@ -69,14 +64,18 @@
     </p>
 
     <div class="flex flex-col md:flex-row gap-4" data-aos="zoom-in" data-aos-delay="400">
-      <a href="{{ route('docent.pagina') }}" class="px-6 py-3 bg-yellow-400 text-black font-medium rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2">
+      <a href="{{ route('docent.form') }}" class="px-6 py-3 bg-yellow-400 text-black font-medium rounded-full shadow-lg hover:bg-yellow-300 transition-all duration-300 flex items-center gap-2">
         <i class="fas fa-chalkboard-teacher text-lg"></i>
         Ga naar Docentomgeving
       </a>
-      <a href="#" class="px-6 py-3 bg-white text-blue-800 font-medium rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 flex items-center gap-2">
-        <i class="fas fa-users text-lg"></i>
-        Bekijk Studentstatistieken
-      </a>
+
+      <a href="{{ route('student.form') }}" class="px-6 py-3 bg-white text-blue-800 font-medium rounded-full shadow-lg hover:bg-gray-200 transition-all duration-300 flex items-center gap-2">
+    <i class="fas fa-users text-lg"></i>
+    Bekijk Studentstatistieken
+</a>
+
+
+
     </div>
 
     <!-- Features -->
