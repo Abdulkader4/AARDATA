@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DocentController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\DocentDashboardController;
@@ -15,7 +14,6 @@ Route::get('/', function () {
 
 Route::resource('Welkome',HomeController::class);
 
-Route::get('/AAR_[JAAR]W[WEEK][CODE].EXTENSIE/docent',[DocentController::class,'index'])->name('docent.pagina');
 Route::get('/upload', [UploadController::class, 'show'])->name('upload.show');
 Route::post('/upload', [UploadController::class, 'upload'])->name('upload.store');
 
@@ -30,8 +28,6 @@ Route::get('/student', [StudentDashboardController::class, 'index'])->name('stud
 // Welkom pagina via resource controller
 Route::resource('Welkome', HomeController::class);
 
-// Docentenpagina met AAR-bestand
-Route::get('/AAR_[JAAR]W[WEEK][CODE].EXTENSIE/docent', [DocentController::class, 'index'])->name('docent.pagina');
 
 // Uploadpagina
 Route::get('/upload', [UploadController::class, 'show'])->name('upload.show');

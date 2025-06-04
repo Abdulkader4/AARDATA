@@ -45,7 +45,7 @@
 
   <!-- Mobile Menu -->
   <div id="mobileMenu" class="hidden md:hidden fixed top-16 left-0 w-full bg-[#1d3557] p-4 z-40 shadow-md">
-    <a href="{{ route('docent.pagina') }}"
+    <a href="{{ route('docent.form') }}"
       class="block py-2 px-4 text-white text-center hover:text-yellow-300 hover:bg-white/10 rounded transition">Docentomgeving</a>
     <a href=""
       class="block py-2 px-4 text-white text-center hover:text-yellow-300 hover:bg-white/10 rounded transition">Studentstatistieken</a>
@@ -71,11 +71,8 @@
           </select>
           <select class="border rounded px-4 py-2 w-full sm:w-48 shadow">
             <option>Bezig</option>
-<<<<<<< HEAD
             <option>Gestopt</option>  
-=======
             <option>Gestopt</option>
->>>>>>> 16194f7 (Upload page-versie2)
           </select>
           <input type="date" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
           <input type="date" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
@@ -132,8 +129,5 @@
 
 </body>
 
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 16194f7 (Upload page-versie2)
+
