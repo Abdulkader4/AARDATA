@@ -34,7 +34,9 @@
   <!-- Navbar -->
   <nav class="w-full px-4 py-3 flex items-center justify-between fixed top-0 left-0 z-50 bg-[#1d3557] bg-opacity-90 backdrop-blur">
     <div class="flex items-center gap-3">
-      <img src="{{ asset('images/99ce1e91-3b73-46a7-9c85-43e5465fd82f.png') }}" class="h-14 md:h-20 lg:h-24" alt="AARDATA Logo">
+      {{-- <img src="{{ asset('images/99ce1e91-3b73-46a7-9c85-43e5465fd82f.png') }}" class="h-14 md:h-20 lg:h-24" alt="AARDATA Logo"> --}}
+      <span class="text-xl font-bold text-yellow-400 hidden sm:inline">AARDATA</span>
+
     </div>
     <div class="md:hidden">
       <button id="burgerBtn" class="text-white focus:outline-none">
