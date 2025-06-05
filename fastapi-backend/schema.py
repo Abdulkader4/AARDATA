@@ -34,6 +34,18 @@ class DocentRead(Docent):
     class Config:
         orm_mode = True
 
+class DocentResponse(BaseModel):
+    id: int
+    naam: str
+    email: str
+    docent_code: str
+
+    class Config:
+        orm_mode = True
+
+class DocentLoginRequest(BaseModel):
+    docent_code: str
+
 # Optional: schema for updating a docent
 class DocentUpdate(BaseModel):
     naam: Optional[str]
@@ -98,6 +110,8 @@ class StudentUpdate(BaseModel):
     gemiddeld_aanwezigheid: int | None = Field(default=0, ge=0, le=100)
     status: Literal["bezig", "gestopt"] | None = "bezig"
 
+
+#------------------------DOCUMENTEN---------------------------------#
 #document upload schema
 class DocumentCreate(BaseModel):
     naam: str = Field(..., max_length=100)
