@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\DocentDashboardController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\StudentOverviewController;
 
 // Homepage
@@ -12,7 +13,6 @@ Route::get('/', fn() => view('home.Welkome'));
 
 // Welkom pagina
 Route::resource('Welkome', HomeController::class);
-
 // Uploadpagina
 Route::get('/upload', [UploadController::class, 'show'])->name('upload.show');
 Route::post('/upload', [UploadController::class, 'upload'])->name('upload.store');
@@ -30,3 +30,4 @@ Route::get('/docent/dashboard/{docentNumber}', [DocentDashboardController::class
 // Studentenoverzicht + individuele pagina
 Route::get('/studenten', [StudentOverviewController::class, 'index'])->name('studenten.index');
 Route::get('/studenten/{nummer}', [StudentOverviewController::class, 'show'])->name('studenten.show');
+Route::get('/hulp',[InfoController::class,'info'])->name('info.page');

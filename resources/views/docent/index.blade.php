@@ -110,7 +110,7 @@
               <td class="px-4 py-3">SDX1</td>
               <td class="px-4 py-3">60%</td>
               <td class="px-4 py-3">geslagd</td>
-              <td class="px-4 py-3"><a href="" class="bg-sky-600 hover:bg-sky-400 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto">Bekijk</a></td>
+              <td class="px-4 py-3"><a href="{{ route('studenten.index') }}" class="bg-sky-600 hover:bg-sky-400 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto">Bekijk</a></td>
             </tr>
           </tbody>
         </table>
