@@ -23,31 +23,68 @@ class DocentDashboardController extends Controller
     }
 
 
-    
-    public function index(Request $request, $docentNumber)
+    public function index(Request $request)
     {
-        // Verbind met FastAPI op poort 9000
         $response = Http::get('http://localhost:9000/studenten/');
 
-        // Check of request slaagt
         if ($response->successful()) {
             $studenten = $response->json();
-            return view('docent.index', compact('studenten'));
+
+            $filtered = array_filter($studenten, function ($student) use ($request) {
+                if ($request->filled('naam') && stripos($student['naam'], $request->input('naam')) === false) {
+                    return false;
+                }
+
+                if ($request->filled('klas') && $student['klas'] !== $request->input('klas')) {
+                    return false;
+                }
+
+                if ($request->filled('aanwezigheid_type') && $request->filled('aanwezigheid')) {
+                    $type = $request->input('aanwezigheid_type');
+                    $value = (int) $request->input('aanwezigheid');
+                    $studentValue = (int) str_replace('%', '', $student['gemiddeld_aanwezigheid']);
+
+                    if (
+                        ($type === 'lt' && $studentValue >= $value) ||
+                        ($type === 'gt' && $studentValue <= $value) ||
+                        ($type === 'eq' && $studentValue != $value)
+                    ) {
+                        return false;
+                    }
+                }
+
+                if ($request->filled('status') && strtolower($student['status']) !== strtolower($request->input('status'))) {
+                    return false;
+                }
+
+                if ($request->filled('van')) {
+                    $studentDate = strtotime($student['datum'] ?? '0000-00-00');
+                    if ($studentDate < strtotime($request->input('van'))) {
+                        return false;
+                    }
+                }
+
+                if ($request->filled('tot')) {
+                    $studentDate = strtotime($student['datum'] ?? '9999-12-31');
+                    if ($studentDate > strtotime($request->input('tot'))) {
+                        return false;
+                    }
+                }
+
+                return true;
+            });
+
+            return view('docent.index', ['studenten' => $filtered]);
         }
 
-        // ❗ Toon de fout als het mislukt
         return response()->json([
             'status' => $response->status(),
             'body' => $response->body(),
             'url' => 'http://localhost:9000/studenten/',
         ], 500);
-
-        $loggedInDocentName = 'Docent ' . $docentNumber;
-
-        return view('docent.index', [
-            'loggedInDocentName' => $loggedInDocentName
-        ]);
     }
+
+
 
     public function showstudent($id)
     {
@@ -67,6 +104,4 @@ class DocentDashboardController extends Controller
             'url' => 'http://localhost:9000/studenten/' . $id,
         ], 500);
     }
-
-    
 }

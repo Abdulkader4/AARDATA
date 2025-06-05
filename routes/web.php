@@ -44,7 +44,7 @@ Route::post('/docent/dashboard', [DocentDashboardController::class, 'redirectToD
 
 
 // docent dashboard
-Route::get('/docent/dashboard/{docentNumber}', [DocentDashboardController::class, 'index'])->name('docent.dashboard');
+Route::get('/docent/dashboard', [DocentDashboardController::class, 'index'])->name('docent.dashboard');
 
 Route::get('/studenten/{student_id}', [DocentDashboardController::class,'showstudent'])->name('student.show');
 

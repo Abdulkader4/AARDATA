@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 import models, schema, crud
 from database import SessionLocal, engine
@@ -80,6 +80,13 @@ def create_docent_route(docent: schema.DocentCreate, db: Session = Depends(get_d
         raise HTTPException(status_code=400, detail=str(e))
     return new_docent
 
+@app.post("/docent/login", response_model=schema.DocentResponse)
+def docent_login(data: schema.DocentLoginRequest, db: Session = Depends(get_db)):
+    docent = crud.get_docent_by_code(db, docent_code=data.docent_code)
+    if not docent:
+        raise HTTPException(status_code=401, detail="Ongeldige docentcode")
+    return docent
+
 
 # -------------------
 # Klassen Endpoints
@@ -95,4 +102,23 @@ def create_klas(klas: schema.KlasCreate, db: Session = Depends(get_db)):
 @app.post("/attendance/", response_model=schema.DailyAttendanceResponse)
 def submit_attendance(data: schema.DailyAttendanceCreate, db: Session = Depends(get_db)):
     return crud.record_daily_attendance(db, data)
+
+
+#-------------------
+#Attendance Endpoints
+#-------------------
+@app.get("/students/filter", response_model=List[schema.StudentResponse])
+def filter_students(
+    meer_dan: int = Query(None, alias="meer dan", description="Filter studenten met percentage boven deze waarde"),
+    minder_dan: int = Query(None, alias="minder dan", description="Filter studenten met percentage onder deze waarde"),
+    db: Session = Depends(get_db)
+):
+    if meer_dan is not None and minder_dan is not None:
+        raise HTTPException(status_code=400, detail="Gebruik alleen 'meer dan' of 'minder dan', niet allebei tegelijk.")
+    elif meer_dan is not None:
+        return crud.filter_studenten_by_attendance_percentage(db, threshold=meer_dan, mode="meer")
+    elif minder_dan is not None:
+        return crud.filter_studenten_by_attendance_percentage(db, threshold=minder_dan, mode="minder")
+    else:
+        raise HTTPException(status_code=400, detail="Geef 'meer dan' of 'minder dan' op als queryparameter.")
 

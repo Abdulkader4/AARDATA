@@ -45,7 +45,9 @@ def create_docent(db: Session, docent_data: dict) -> Docent:
     db.refresh(docent)
     return docent
 
-
+#Login using docent-code
+def get_docent_by_code(db: Session, docent_code: str):
+    return db.query(Docent).filter(Docent.docent_code == docent_code).first()
 
 #--------------------------------STUDENT---------------------------------#
 
@@ -227,3 +229,23 @@ def get_student_attendance_overview(db: Session, student_id: int):
         "weekly": result,
         "gemiddeld_aanwezigheid": gemiddeld
     }
+
+# Filter attendance records by attendance
+def filter_studenten_by_attendance_percentage(db: Session, threshold: int, mode: str = "meer"):
+    """
+    Filter students by gemiddeld_aanwezigheid percentage.
+
+    Args:
+        db (Session): SQLAlchemy session
+        threshold (int): The percentage threshold to filter against
+        mode (str): 'meer' for greater than, 'minder' for less than
+
+    Returns:
+        List[Student]: Students matching the criteria
+    """
+    if mode == "meer":
+        return db.query(Student).filter(Student.gemiddeld_aanwezigheid > threshold).all()
+    elif mode == "minder":
+        return db.query(Student).filter(Student.gemiddeld_aanwezigheid < threshold).all()
+    else:
+        raise ValueError("Invalid mode. Use 'meer' or 'minder'.")

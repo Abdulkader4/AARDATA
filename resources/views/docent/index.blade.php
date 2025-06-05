@@ -56,42 +56,101 @@
     <div class=" w-full max-w-8xl space-y-10">
 
       <!-- Filters -->
-      <div class="bg-white text-black p-4 sm:p-6 rounded-xl shadow-xl">
-        <div class="flex flex-col sm:flex-wrap sm:flex-row gap-4 sm:gap-6 items-center justify-center">
-          <input type="text" placeholder="Student Zoeken..." class="border rounded px-4 py-2 w-full sm:w-64 shadow">
-          <select class="border rounded px-4 py-2 w-full sm:w-40 shadow">
-            <option>Klas</option>
-            <option>SDX1</option>
-            <option>SDX2</option>
-            <option>SDX3</option>
-          </select>
-          <select class="border rounded px-4 py-2 w-full sm:w-48 shadow">
-            <option>Minder dan 33%</option>
-            <option>Minder dan 50%</option>
-          </select>
-          <select class="border rounded px-4 py-2 w-full sm:w-48 shadow">
-            <option>Bezig</option>
-            <option>Gestopt</option>
-            <option>Gestopt</option>
-          </select>
-          <input type="date" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
-          <input type="date" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+      <!-- <form method="GET" action="{{ route('docent.dashboard') }}">
+        <div class="bg-white text-black p-4 sm:p-6 rounded-xl shadow-xl">
+          <div class="flex flex-col sm:flex-wrap sm:flex-row gap-4 sm:gap-6 items-center justify-center">
 
-          <!-- Buttons -->
-          <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto">
-              Filteren
-            </button>
+            <input type="text" name="naam" value="{{ request('naam') }}" placeholder="Student Zoeken..." class="border rounded px-4 py-2 w-full sm:w-64 shadow">
 
-            <a href="{{ route('upload.show') }}"
-              class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto text-center transition">
-              Upload Bestand
-            </a>
+            <select name="klas" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+              <option value="">Klas</option>
+              <option value="SDX1" {{ request('klas') == 'SDX1' ? 'selected' : '' }}>SDX1</option>
+              <option value="SDX2" {{ request('klas') == 'SDX2' ? 'selected' : '' }}>SDX2</option>
+              <option value="SDX3" {{ request('klas') == 'SDX3' ? 'selected' : '' }}>SDX3</option>
+            </select>
 
+            <select name="aanwezigheid" class="border rounded px-4 py-2 w-full sm:w-48 shadow">
+              <option value="">Aanwezigheid</option>
+              <option value="33" {{ request('aanwezigheid') == '33' ? 'selected' : '' }}>Minder dan 33%</option>
+              <option value="50" {{ request('aanwezigheid') == '50' ? 'selected' : '' }}>Minder dan 50%</option>
+            </select>
+
+            <select name="status" class="border rounded px-4 py-2 w-full sm:w-48 shadow">
+              <option value="">Status</option>
+              <option value="bezig" {{ request('status') == 'bezig' ? 'selected' : '' }}>Bezig</option>
+              <option value="gestopt" {{ request('status') == 'gestopt' ? 'selected' : '' }}>Gestopt</option>
+              <option value="geslaagd" {{ request('status') == 'geslaagd' ? 'selected' : '' }}>Geslaagd</option>
+            </select>
+
+            <input type="date" name="van" value="{{ request('van') }}" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+            <input type="date" name="tot" value="{{ request('tot') }}" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto">
+                Filteren
+              </button>
+
+              <a href="{{ route('upload.show') }}" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto text-center transition">
+                Upload Bestand
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      </form> -->
 
+
+      <form method="GET" action="{{ route('docent.dashboard') }}">
+        <div class="bg-white text-black p-4 sm:p-6 rounded-xl shadow-xl">
+          <div class="flex flex-col sm:flex-wrap sm:flex-row gap-4 sm:gap-6 items-center justify-center">
+
+            <input type="text" name="naam" placeholder="Student Zoeken..." value="{{ request('naam') }}"
+              class="border rounded px-4 py-2 w-full sm:w-64 shadow">
+
+            <select name="klas" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+              <option value="">Klas</option>
+              <option value="SDX1" {{ request('klas') == 'SDX1' ? 'selected' : '' }}>SDX1</option>
+              <option value="SDX2" {{ request('klas') == 'SDX2' ? 'selected' : '' }}>SDX2</option>
+              <option value="SDX3" {{ request('klas') == 'SDX3' ? 'selected' : '' }}>SDX3</option>
+            </select>
+
+            {{-- aanwezigheid --}}
+            <div class="flex flex-col sm:flex-row items-center gap-2">
+              <select name="aanwezigheid_type" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+                <option value="">Filtertype</option>
+                <option value="lt" {{ request('aanwezigheid_type') == 'lt' ? 'selected' : '' }}>Minder dan</option>
+                <option value="gt" {{ request('aanwezigheid_type') == 'gt' ? 'selected' : '' }}>Meer dan</option>
+                <option value="eq" {{ request('aanwezigheid_type') == 'eq' ? 'selected' : '' }}>Gelijk aan</option>
+              </select>
+
+              <input type="number" name="aanwezigheid" min="0" max="100"
+                value="{{ request('aanwezigheid') }}"
+                placeholder="Bijv. 20"
+                class="border rounded px-4 py-2 w-full sm:w-28 shadow">
+            </div>
+
+            <select name="status" class="border rounded px-4 py-2 w-full sm:w-48 shadow">
+              <option value="">Status</option>
+              <option value="bezig" {{ request('status') == 'bezig' ? 'selected' : '' }}>Bezig</option>
+              <option value="gestopt" {{ request('status') == 'gestopt' ? 'selected' : '' }}>Gestopt</option>
+              <option value="geslaagd" {{ request('status') == 'geslaagd' ? 'selected' : '' }}>Geslaagd</option>
+            </select>
+
+            <input type="date" name="van" value="{{ request('van') }}" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+            <input type="date" name="tot" value="{{ request('tot') }}" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto">
+                Filteren
+              </button>
+
+              <a href="{{ route('upload.show') }}"
+                class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto text-center transition">
+                Upload Bestand
+              </a>
+            </div>
+          </div>
+        </div>
+      </form>
       <!-- Table -->
       <div class="bg-white text-black rounded-xl shadow-xl overflow-x-auto">
         <table class="w-full min-w-[600px] text-left">
@@ -118,7 +177,7 @@
             </tr>
 
 
-              @endforeach
+            @endforeach
 
           </tbody>
         </table>
