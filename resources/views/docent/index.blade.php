@@ -27,7 +27,7 @@
     class="w-full px-4 py-4 flex items-center justify-between fixed top-0 left-0 z-50 bg-[#1d3557] bg-opacity-90 backdrop-blur">
     <div class="flex items-center gap-3">
       {{-- <img src="{{ asset('images/99ce1e91-3b73-46a7-9c85-43e5465fd82f.png') }}" class="h-10 md:h-16"
-        alt="AARDATA Logo" /> --}}
+      alt="AARDATA Logo" /> --}}
       <span class="text-xl font-bold text-yellow-400 hidden sm:inline">AARDATA</span>
     </div>
     <!-- Burger Menu -->
@@ -67,11 +67,11 @@
           </select>
           <select class="border rounded px-4 py-2 w-full sm:w-48 shadow">
             <option>Minder dan 33%</option>
-            <option>Minder dan 50%</option>  
+            <option>Minder dan 50%</option>
           </select>
           <select class="border rounded px-4 py-2 w-full sm:w-48 shadow">
             <option>Bezig</option>
-            <option>Gestopt</option>  
+            <option>Gestopt</option>
             <option>Gestopt</option>
           </select>
           <input type="date" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
@@ -105,13 +105,18 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 text-center">
-            <tr class="hover:bg-gray-100">
-              <td class="px-4 py-3">Peter</td>
-              <td class="px-4 py-3">SDX1</td>
-              <td class="px-4 py-3">60%</td>
-              <td class="px-4 py-3">geslagd</td>
-              <td class="px-4 py-3"><a href="" class="bg-sky-600 hover:bg-sky-400 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto">Bekijk</a></td>
+            @foreach ($studenten as $student)
+            <tr>
+              <td>{{ $student['naam'] }}</td>
+              <td>{{ $student['klas'] }}</td>
+              <td>{{ $student['gemiddeld_aanwezigheid'] }}</td>
+              <td>{{ $student['status'] }}</td>
+              <td>
+                <a href="{{ route('student.show', $student['id']) }}"
+                  class="text-blue-600 hover:text-blue-800 font-semibold text-amber-50white px-5 py-2 rounded shadow-md w-full sm:w-auto">Bekijk</a>
             </tr>
+            @endforeach
+
           </tbody>
         </table>
       </div>
@@ -121,7 +126,7 @@
 
   <!-- Scripts -->
   <script>
-    document.getElementById('burgerBtn').addEventListener('click', function () {
+    document.getElementById('burgerBtn').addEventListener('click', function() {
       const menu = document.getElementById('mobileMenu');
       menu.classList.toggle('hidden');
     });
@@ -130,4 +135,3 @@
 </body>
 
 </html>
-

@@ -11,6 +11,10 @@ class StudentDashboardController extends Controller
         return view('student.form');
     }
 
+
+
+    
+
     public function redirectToDashboard(Request $request)
     {
         $request->validate([
