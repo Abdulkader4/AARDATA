@@ -1,3 +1,4 @@
+# ===== Laravel standaard (staat bij jou al) =====
 *.log
 .DS_Store
 .env
@@ -24,3 +25,11 @@ Homestead.yaml
 npm-debug.log
 Thumbs.db
 yarn-error.log
+fastapi-backend/venv/
+fastapi-backend/__pycache__/
+fastapi-backend/.env
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.sqlite3

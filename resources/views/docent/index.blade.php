@@ -111,11 +111,14 @@
               <td>{{ $student['klas'] }}</td>
               <td>{{ $student['gemiddeld_aanwezigheid'] }}</td>
               <td>{{ $student['status'] }}</td>
-              <td>
+              <td class="px-4 py-3">
                 <a href="{{ route('student.show', $student['id']) }}"
                   class="text-blue-600 hover:text-blue-800 font-semibold text-amber-50white px-5 py-2 rounded shadow-md w-full sm:w-auto">Bekijk</a>
+              </td>
             </tr>
-            @endforeach
+
+
+              @endforeach
 
           </tbody>
         </table>
