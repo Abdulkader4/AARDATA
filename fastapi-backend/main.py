@@ -5,22 +5,22 @@ import models, schema, crud
 from database import SessionLocal, engine
 from fastapi.middleware.cors import CORSMiddleware
 
-# Create DB tables
+# Maak de database tabellen aan (indien nog niet aanwezig)
 models.Base.metadata.create_all(bind=engine)
 
-# Init FastAPI
+# Initieer FastAPI-app
 app = FastAPI()
 
-# Allow all CORS (for development)
+# CORS instellingen (voor development)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8000"],
+    allow_origins=["http://localhost:8000"],  # Pas aan indien je frontend elders draait
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Dependency
+# Dependency voor database sessie
 def get_db():
     db = SessionLocal()
     try:
@@ -28,71 +28,70 @@ def get_db():
     finally:
         db.close()
 
-# Home page
+
+# -------------------
+# Algemene routes
+# -------------------
+
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"message": "API draait correct"}
 
-# Dashboards
-@app.get("/docent-dashboard")
-def read_docent_dashboard(db: Session = Depends(get_db)):
-    return {"message": "Welcome to the Docent Dashboard"}
-
-@app.get("/student-dashboard")
-def read_student_dashboard(db: Session = Depends(get_db)):
-    return {"message": "Welcome to the Student Dashboard"}
 
 # -------------------
-# Student Endpoints
+# Studenten endpoints
 # -------------------
-# Create student
-@app.post("/studenten/", response_model=schema.StudentResponse)
-def create_new_student(student: schema.StudentCreate, db: Session = Depends(get_db)):
-    existing = db.query(models.Student).filter(models.Student.email == student.email).first()
-    if existing:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.create_student(db=db, student=student)
 
-# Get single student
-@app.get("/studenten/{student_id}", response_model=schema.StudentResponse)
-def read_student(student_id: int, db: Session = Depends(get_db)):
-    return crud.get_student_by_id(db, student_id)
-
-# Get all students — this was the missing route!
+# Alle studenten ophalen
 @app.get("/studenten/", response_model=List[schema.StudentResponse])
 def read_students(db: Session = Depends(get_db)):
     return crud.get_all_students(db)
 
-# student attendance
+# Één student ophalen
+@app.get("/studenten/{student_id}", response_model=schema.StudentResponse)
+def read_student(student_id: int, db: Session = Depends(get_db)):
+    student = crud.get_student_by_id(db, student_id)
+    if not student:
+        raise HTTPException(status_code=404, detail="Student niet gevonden")
+    return student
+
+# Student aanmaken
+@app.post("/studenten/", response_model=schema.StudentResponse)
+def create_student(student: schema.StudentCreate, db: Session = Depends(get_db)):
+    return crud.create_student(db, student)
+
+# Aanwezigheidsoverzicht voor een student
 @app.get("/students/{student_id}/attendance", response_model=schema.StudentAttendanceOverview)
 def get_student_attendance(student_id: int, db: Session = Depends(get_db)):
     return crud.get_student_attendance_overview(db, student_id)
 
+
 # -------------------
-# Docent Endpoints
+# Docent endpoints
 # -------------------
+
 @app.post("/docenten/", response_model=schema.DocentRead)
-def create_docent_route(docent: schema.DocentCreate, db: Session = Depends(get_db)):
+def create_docent(docent: schema.DocentCreate, db: Session = Depends(get_db)):
     docent_data = docent.dict(exclude={"password"})
     try:
-        new_docent = crud.create_docent(db, docent_data)
+        return crud.create_docent(db, docent_data)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    return new_docent
 
 
 # -------------------
-# Klassen Endpoints
+# Klassen endpoints
 # -------------------
+
 @app.post("/klassen/", response_model=schema.KlasResponse)
 def create_klas(klas: schema.KlasCreate, db: Session = Depends(get_db)):
-    return crud.create_klas(db=db, klas=klas)
+    return crud.create_klas(db, klas)
 
 
-#-------------------
-#attachments Endpoints
-#-------------------
+# -------------------
+# Aanwezigheid endpoint
+# -------------------
+
 @app.post("/attendance/", response_model=schema.DailyAttendanceResponse)
 def submit_attendance(data: schema.DailyAttendanceCreate, db: Session = Depends(get_db)):
     return crud.record_daily_attendance(db, data)
-
