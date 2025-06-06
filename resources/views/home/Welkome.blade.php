@@ -43,7 +43,7 @@
   <nav
     class="w-full px-4 py-3 flex items-center justify-between fixed top-0 left-0 z-50 bg-[#1d3557] bg-opacity-90 backdrop-blur">
     <div class="flex items-center gap-3">
-    
+
       <span class="text-xl font-bold text-yellow-400 hidden sm:inline">AARDATA</span>
 
     </div>

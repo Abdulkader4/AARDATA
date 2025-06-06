@@ -70,6 +70,22 @@
                 </div>
             </div>
         @endif
+
+        {{-- Geüploade bestanden --}}
+        @if(!empty($files))
+            <div class="mt-10 bg-gray-50 p-4 rounded shadow">
+                <h2 class="text-lg sm:text-xl font-semibold mb-3 text-center text-blue-900">Geüploade Bestanden</h2>
+                <ul class="list-disc list-inside text-gray-700 space-y-1 max-h-[200px] overflow-y-auto">
+                    @foreach($files as $file)
+                        <li>
+                            <a href="http://localhost:9000/uploads/{{ $file }}" target="_blank" class="text-blue-600 hover:underline">
+                                {{ $file }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
 
     {{-- Bevestigingsmodal --}}

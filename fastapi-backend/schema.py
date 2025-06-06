@@ -9,19 +9,19 @@ class Docent(BaseModel):
     id: int
     naam: str = Field(..., max_length=100)
     email: EmailStr
-    docent_code: str  # Unique code for the docent
-    role: Optional[str] = "docent"  # Default role is 'docent'
+    docent_code: str
+    role: Optional[str] = "docent"
     created_at: datetime
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 #docent create schema
 class DocentCreate(BaseModel):
     naam: str = Field(..., max_length=100)
     email: EmailStr
-    role: str = "docent"  # Default role is 'docent'
+    role: str = "docent"
 
 # Schema for reading a docent (output)
 class DocentRead(Docent):
@@ -32,7 +32,7 @@ class DocentRead(Docent):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class DocentResponse(BaseModel):
     id: int
@@ -41,12 +41,11 @@ class DocentResponse(BaseModel):
     docent_code: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class DocentLoginRequest(BaseModel):
     docent_code: str
 
-# Optional: schema for updating a docent
 class DocentUpdate(BaseModel):
     naam: Optional[str]
     email: Optional[EmailStr]
@@ -54,12 +53,10 @@ class DocentUpdate(BaseModel):
     role: Optional[str]
 
     class Config:
-        orm_mode = True
-
+        from_attributes = True
 
 #---------------------------------STUDENT-------------------------------#
 
-#student schema
 class Student(BaseModel):
     id: int
     name: str = Field(..., max_length=100)
@@ -72,16 +69,14 @@ class Student(BaseModel):
     status: Literal["bezig", "gestopt"] | None = "bezig"
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
-#student create schema
 class StudentCreate(BaseModel):
     naam: str
     email: EmailStr
     klas: Optional[str] = None
     role: Optional[str] = "student"
 
-# Schema for reading a student (output)
 class StudentResponse(BaseModel):
     id: int
     naam: str
@@ -97,9 +92,8 @@ class StudentResponse(BaseModel):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
-#student update schema
 class StudentUpdate(BaseModel):
     naam: str | None = Field(max_length=100)
     email: EmailStr | None
@@ -110,18 +104,16 @@ class StudentUpdate(BaseModel):
     gemiddeld_aanwezigheid: int | None = Field(default=0, ge=0, le=100)
     status: Literal["bezig", "gestopt"] | None = "bezig"
 
-
 #------------------------DOCUMENTEN---------------------------------#
-#document upload schema
+
 class DocumentCreate(BaseModel):
     naam: str = Field(..., max_length=100)
-    type: str = Field(..., max_length=50)  # e.g., 'pdf', 'docx'
+    type: str = Field(..., max_length=50)
     url: str
     klas: str
 
-
 #------------------------KLAS---------------------------------#
-# klas schema
+
 class Klas(BaseModel):
     id: int
     naam: str = Field(..., max_length=100)
@@ -130,14 +122,12 @@ class Klas(BaseModel):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
-# klas create schema
 class KlasCreate(BaseModel):
     naam: str = Field(..., max_length=100)
     niveau: str = Field(..., max_length=50)
 
-# klas response schema
 class KlasResponse(BaseModel):
     id: int
     naam: str
@@ -146,27 +136,25 @@ class KlasResponse(BaseModel):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
-
+        from_attributes = True
 
 #---------------------------DOCUMENT----------------------------#
-#get document schema
+
 class Document(BaseModel):
     id: int
     naam: str = Field(..., max_length=100)
-    type: str = Field(..., max_length=50)  # e.g., 'pdf', 'docx'
+    type: str = Field(..., max_length=50)
     url: str
     klas_id: int
 
     class Config:
-        orm_mode = True
-
+        from_attributes = True
 
 #----------------------------ATTENDANCE----------------------------#
-# Attendance schema
+
 class DailyAttendanceCreate(BaseModel):
     student_id: int
-    date: date  # format: YYYY-MM-DD
+    date: date
     status: Literal["aanwezig", "afwezig"]
 
 class DailyAttendanceResponse(BaseModel):
@@ -177,7 +165,7 @@ class DailyAttendanceResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class WeeklyAttendance(BaseModel):
     week: int

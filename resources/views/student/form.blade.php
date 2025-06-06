@@ -19,18 +19,25 @@
       </button>
     </form>
 
-    <!-- Login Form -->
     <form action="{{ route('student.redirect') }}" method="POST" class="space-y-4">
       @csrf
+
       <label for="student_number" class="block text-sm sm:text-base font-medium">Voer je studentnummer in:</label>
+
       <input type="number" id="student_number" name="student_number"
         class="w-full border border-gray-300 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         required>
+
+      @error('student_number')
+        <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
+      @enderror
+
       <button type="submit"
         class="w-full bg-yellow-400 text-black py-2 rounded hover:bg-yellow-300 transition font-semibold">
         Bekijk Dashboard
       </button>
     </form>
+
   </div>
 </body>
 </html>

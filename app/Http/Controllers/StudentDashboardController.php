@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+
 
 class StudentDashboardController extends Controller
 {
@@ -13,7 +15,7 @@ class StudentDashboardController extends Controller
 
 
 
-    
+
 
     public function redirectToDashboard(Request $request)
     {
@@ -21,8 +23,31 @@ class StudentDashboardController extends Controller
             'student_number' => 'required|numeric'
         ]);
 
-        return redirect()->route('student.dashboard', ['studentNumber' => $request->student_number]);
+        $studentNumber = $request->input('student_number');
+
+        $response = Http::get("http://localhost:9000/studenten/{$studentNumber}");
+
+        if ($response->successful()) {
+            session()->forget('student_failed_attempts');
+            return redirect()->route('student.dashboard', ['studentNumber' => $studentNumber]);
+        } else {
+            $attempts = session('student_failed_attempts', 0) + 1;
+            session(['student_failed_attempts' => $attempts]);
+
+            if ($attempts >= 3) {
+                return redirect()->route('student.form')->withErrors([
+                    'student_number' => 'Te veel foutieve pogingen. Neem contact met ons op.',
+                ]);
+            }
+            return redirect()->route('student.form')->withErrors([
+                'student_number' => 'Studentnummer niet gevonden.',
+            ]);
+        }
     }
+
+
+
+
 
     public function index(Request $request, $studentNumber)
     {

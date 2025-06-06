@@ -7,67 +7,54 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
+
 
 class UploadController extends Controller
 {
     public function show()
     {
-        return view('upload');
+        $response = Http::get('http://localhost:9000/uploads'); // FastAPI endpoint
+
+        if ($response->successful()) {
+            $files = $response->json();
+        } else {
+            $files = [];
+        }
+
+        return view('upload', compact('files'));
     }
 
     public function upload(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:xlsx,ods',
-        ]);
+{
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx,ods',
+    ]);
 
-        $file = $request->file('file');
-        $filename = $file->getClientOriginalName();
+    try {
+        $response = Http::attach(
+            'file', file_get_contents($request->file('file')), $request->file('file')->getClientOriginalName()
+        )->post('http://localhost:9000/upload');
 
-        // Bestandsnaam controle: AAR_2024_W12_bla.xlsx of .ods
-        if (!preg_match('/^AAR_\d{4}_W\d{2}.*\.(xlsx|ods)$/', $filename)) {
-            return back()->with('error', 'Bestandsnaam voldoet niet aan de vereiste naamgevingsconventie.');
+        if ($response->successful()) {
+            return back()->with('success', 'Bestand succesvol geüpload.');
+        } else {
+            return back()->with('error', 'Upload mislukt: ' . $response->body());
         }
-
-        try {
-            // Bestand uitlezen naar een collection
-            $data = Excel::toCollection(null, $file)->first();
-
-            if (!$data || $data->isEmpty()) {
-                return back()->with('error', 'Bestand bevat geen gegevens.');
-            }
-
-            // Controleer kolomkoppen (eerste rij)
-            $headers = $data->first()->keys()->toArray();
-            $requiredHeaders = ['Jaar', 'Week', 'Rooster', 'Aanwezigheid', 'Studentnr'];
-
-            if ($headers !== $requiredHeaders) {
-                return back()->with('error', 'Kolomnamen komen niet overeen met de vereiste structuur.');
-            }
-
-            // Filter lege rijen uit
-            $validRows = $data->filter(function ($row) {
-                return $row->filter()->isNotEmpty();
-            });
-
-            // Verwerk de rijen (hier alleen logging; later kun je database-opslag doen)
-            foreach ($validRows as $index => $row) {
-                try {
-                    // Simuleer verwerking of opslaan
-                    Log::info("Rij $index verwerkt:", $row->toArray());
-                    // TODO: voeg database-insert hier toe, met checks op dubbele week/student
-                } catch (\Exception $e) {
-                    Log::error("Fout bij rij $index: " . $e->getMessage());
-                }
-            }
-
-            // Bestand opslaan in storage (optioneel)
-            $path = $file->storeAs('uploads', $filename);
-
-            return back()->with('success', 'Bestand succesvol geüpload en gevalideerd.');
-        } catch (\Exception $e) {
-            Log::error('Fout bij upload: ' . $e->getMessage());
-            return back()->with('error', 'Er ging iets mis tijdens het verwerken van het bestand.');
-        }
+    } catch (\Exception $e) {
+        return back()->with('error', 'Er is een fout opgetreden tijdens upload: ' . $e->getMessage());
     }
+}
+
+public function fetchUploads()
+{
+    $response = Http::get('http://localhost:9000/uploads');
+
+    if ($response->successful()) {
+        $files = $response->json();
+        return view('upload_list', compact('files'));
+    } else {
+        return view('upload_list')->with('error', 'Fout bij ophalen van bestanden.');
+    }
+}
 }

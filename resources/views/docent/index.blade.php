@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -56,48 +54,7 @@
   <div class="min-h-[calc(100vh-5rem)] flex items-center justify-center px-2 sm:px-4 py-10 pt-32">
     <div class=" w-full max-w-8xl space-y-10">
 
-      <!-- Filters -->
-      <!-- <form method="GET" action="{{ route('docent.dashboard') }}">
-        <div class="bg-white text-black p-4 sm:p-6 rounded-xl shadow-xl">
-          <div class="flex flex-col sm:flex-wrap sm:flex-row gap-4 sm:gap-6 items-center justify-center">
 
-            <input type="text" name="naam" value="{{ request('naam') }}" placeholder="Student Zoeken..." class="border rounded px-4 py-2 w-full sm:w-64 shadow">
-
-            <select name="klas" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
-              <option value="">Klas</option>
-              <option value="SDX1" {{ request('klas') == 'SDX1' ? 'selected' : '' }}>SDX1</option>
-              <option value="SDX2" {{ request('klas') == 'SDX2' ? 'selected' : '' }}>SDX2</option>
-              <option value="SDX3" {{ request('klas') == 'SDX3' ? 'selected' : '' }}>SDX3</option>
-            </select>
-
-            <select name="aanwezigheid" class="border rounded px-4 py-2 w-full sm:w-48 shadow">
-              <option value="">Aanwezigheid</option>
-              <option value="33" {{ request('aanwezigheid') == '33' ? 'selected' : '' }}>Minder dan 33%</option>
-              <option value="50" {{ request('aanwezigheid') == '50' ? 'selected' : '' }}>Minder dan 50%</option>
-            </select>
-
-            <select name="status" class="border rounded px-4 py-2 w-full sm:w-48 shadow">
-              <option value="">Status</option>
-              <option value="bezig" {{ request('status') == 'bezig' ? 'selected' : '' }}>Bezig</option>
-              <option value="gestopt" {{ request('status') == 'gestopt' ? 'selected' : '' }}>Gestopt</option>
-              <option value="geslaagd" {{ request('status') == 'geslaagd' ? 'selected' : '' }}>Geslaagd</option>
-            </select>
-
-            <input type="date" name="van" value="{{ request('van') }}" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
-            <input type="date" name="tot" value="{{ request('tot') }}" class="border rounded px-4 py-2 w-full sm:w-40 shadow">
-
-            <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto">
-                Filteren
-              </button>
-
-              <a href="{{ route('upload.show') }}" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded shadow-md w-full sm:w-auto text-center transition">
-                Upload Bestand
-              </a>
-            </div>
-          </div>
-        </div>
-      </form> -->
 
 
       <form method="GET" action="{{ route('docent.dashboard') }}">

@@ -13,14 +13,37 @@ class DocentDashboardController extends Controller
         return view('docent.form');
     }
 
+
     public function redirectToDashboard(Request $request)
     {
         $request->validate([
             'docent_number' => 'required|numeric'
         ]);
 
-        return redirect()->route('docent.dashboard', ['docentNumber' => $request->docent_number]);
+        $docentNumber = $request->input('docent_number');
+
+        // حاول تتصل بـ FastAPI
+        $response = Http::get("http://localhost:9000/docenten/{$docentNumber}");
+
+        if ($response->successful()) {
+            session()->forget('docent_failed_attempts');
+            return redirect()->route('docent.dashboard', ['docentNumber' => $docentNumber]);
+        } else {
+            $attempts = session('docent_failed_attempts', 0) + 1;
+            session(['docent_failed_attempts' => $attempts]);
+
+            if ($attempts >= 3) {
+                return redirect()->route('docent.form')->withErrors([
+                    'docent_number' => 'Te veel foutieve pogingen. Neem contact met ons op.',
+                ]);
+            }
+
+            return redirect()->route('docent.form')->withErrors([
+                'docent_number' => 'Docentnummer niet gevonden.',
+            ]);
+        }
     }
+
 
 
     public function index(Request $request)
