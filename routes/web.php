@@ -6,7 +6,6 @@ use App\Http\Controllers\UploadController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\DocentDashboardController;
 use App\Http\Controllers\InfoController;
-use App\Http\Controllers\StudentOverviewController;
 
 // Homepage
 Route::get('/', fn() => view('home.Welkome'));

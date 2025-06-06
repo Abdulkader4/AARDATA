@@ -21,6 +21,8 @@
     <div class="flex items-center gap-4">
         <h1 class="text-xl font-bold text-yellow-300">AARDATA</h1>
         <a href="{{ url('Welkome') }}" class="text-white hover:text-yellow-300 font-medium transition">Home</a>
+                <a href="{{ url('Welkome') }}" class="text-white hover:text-yellow-300 font-medium transition">Help</a>
+
     </div>
     <button onclick="downloadPDF()" class="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 transition">
         Download PDF

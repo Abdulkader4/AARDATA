@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         body {
             background: linear-gradient(135deg, #1d3557, #457b9d);
@@ -37,14 +38,25 @@
     <div class="bg-white text-black p-6 rounded-xl shadow mb-8">
         <h2 class="text-xl font-bold text-[#1d3557] mb-4">📅 Filter Aanwezigheid</h2>
         <form method="GET" action="" class="grid grid-cols-1 md:grid-cols-6 gap-4">
-            <div>
-                <label for="date_from" class="block text-sm font-medium text-gray-700 mb-1">Van datum</label>
-                <input type="date" id="date_from" name="date_from" class="w-full px-3 py-2 border rounded-md text-[#1d3557]">
+            <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="relative">
+                    <label for="date_from" class="block text-sm font-medium text-gray-700 mb-1">📅 Van datum</label>
+                    <input type="date" id="date_from" name="date_from"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md text-[#1d3557] focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-sm">
+                    <span class="absolute right-3 top-10 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+                        <i class="fas fa-calendar-alt"></i>
+                    </span>
+                </div>
+                <div class="relative">
+                    <label for="date_to" class="block text-sm font-medium text-gray-700 mb-1">📆 Tot datum</label>
+                    <input type="date" id="date_to" name="date_to"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md text-[#1d3557] focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-sm">
+                    <span class="absolute right-3 top-10 transform -translate-y-1/2 text-gray-400 pointer-events-none">
+                        <i class="fas fa-calendar-check"></i>
+                    </span>
+                </div>
             </div>
-            <div>
-                <label for="date_to" class="block text-sm font-medium text-gray-700 mb-1">Tot datum</label>
-                <input type="date" id="date_to" name="date_to" class="w-full px-3 py-2 border rounded-md text-[#1d3557]">
-            </div>
+
             <div>
                 <label for="week" class="block text-sm font-medium text-gray-700 mb-1">Week</label>
                 <select id="week" name="week" class="w-full px-3 py-2 border rounded-md text-[#1d3557]">
@@ -80,7 +92,6 @@
     <h1 class="text-3xl font-bold mb-8">Studentgegevens</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <!-- 📄 Student Info -->
         <div class="bg-white text-black p-6 rounded-xl shadow space-y-3">
             <h2 class="text-lg font-semibold text-[#1d3557] mb-2">👤 Persoonlijke info</h2>
             <div class="border-t pt-2 space-y-2 text-sm">
@@ -92,7 +103,6 @@
             </div>
         </div>
 
-        <!-- 🟡 Status label -->
         <div class="bg-white text-black p-6 rounded-xl shadow text-center flex flex-col justify-center">
             <h2 class="text-lg font-semibold text-[#1d3557] mb-2">📈 Aanwezigheid</h2>
             @php
@@ -119,7 +129,6 @@
             <p class="text-3xl font-bold {{ $color }}">{{ $percentage }}%<br><span class="text-base">{{ $label }}</span></p>
         </div>
 
-        <!-- 📊 Grafiek -->
         <div class="bg-white text-black p-6 rounded-xl shadow text-center">
             <h2 class="text-lg font-semibold text-[#1d3557] mb-4">🧮 Cirkelgrafiek</h2>
             <div class="w-40 h-40 mx-auto">
